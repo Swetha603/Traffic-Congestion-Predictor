@@ -4,7 +4,7 @@ A Machine Learning project that predicts traffic congestion levels using histori
 
 ## 📌 Project Overview
 
-Traffic congestion is a common problem in urban areas. This project uses Machine Learning to analyze traffic conditions and predict the congestion level based on factors such as:
+Traffic congestion is a common problem in urban areas. This project uses Machine Learning to analyze traffic conditions and predict congestion levels based on factors such as:
 
 * Number of vehicles
 * Vehicle speed
@@ -15,20 +15,20 @@ Traffic congestion is a common problem in urban areas. This project uses Machine
 * Weekend status
 * Peak-hour status
 
-The trained model is integrated with a Streamlit web application.
+The trained Machine Learning model is integrated with a Streamlit web application for interactive predictions.
 
 ## 🎯 Objective
 
 The main objective of this project is to build an end-to-end Machine Learning system that can:
 
 1. Load and analyze traffic data
-2. Clean the dataset
-3. Perform exploratory data analysis
+2. Clean and prepare the dataset
+3. Perform Exploratory Data Analysis (EDA)
 4. Create useful features
 5. Train Machine Learning models
 6. Compare model performance
 7. Save the trained model
-8. Make predictions through a web application
+8. Make traffic congestion predictions through a web application
 
 ## 🛠️ Technologies Used
 
@@ -62,15 +62,15 @@ The models were evaluated using:
 ```text
 Traffic-Congestion-Predictor
 │
-├── data
+├── Data
 │   └── traffic_data.csv
 │
-├── models
+├── Models
 │   └── traffic_congestion_model.pkl
 │
-├── notebooks
+├── Notebooks
 │
-├── src
+├── Src
 │   ├── check_data.py
 │   ├── eda.py
 │   ├── feature_engineering.py
@@ -81,9 +81,14 @@ Traffic-Congestion-Predictor
 │   ├── evaluate_models.py
 │   └── save_model.py
 │
+├── images
+│   ├── traffic-predictor-app.png (2).png
+│   └── traffic-predictor-app.png.png
+│
 ├── app.py
 ├── README.md
-└── requirements.txt
+├── requirements.txt
+└── .gitignore
 ```
 
 ## ⚙️ Installation
@@ -91,7 +96,7 @@ Traffic-Congestion-Predictor
 Clone the repository:
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_URL
+git clone https://github.com/Swetha603/Traffic-Congestion-Predictor.git
 ```
 
 Move into the project folder:
@@ -111,7 +116,7 @@ pip install -r requirements.txt
 Start the Streamlit application:
 
 ```bash
-streamlit run app.py
+python -m streamlit run app.py
 ```
 
 The application will open in your browser.
@@ -130,6 +135,16 @@ The Streamlit dashboard allows users to enter:
 * Peak-hour status
 
 The trained Machine Learning model then predicts the traffic congestion level.
+
+## 🖥️ Application Screenshots
+
+### Traffic Congestion Predictor
+
+![Traffic Congestion Predictor](images/traffic-predictor-app.png%20\(2\).png)
+
+### Prediction Interface
+
+![Prediction Interface](images/traffic-predictor-app.png.png)
 
 ## 🔄 Machine Learning Workflow
 
@@ -169,6 +184,13 @@ Traffic Congestion Prediction
 * Deploy the application online
 
 ## 👩‍💻 Author
+
+**P. Sai Swetha**
+
+B.Tech CSE Data Science Student
+
+GitHub: [@Swetha603](https://github.com/Swetha603)
+
 P. Sai Swetha
 B.Tech CSE Data Science Student
 
