@@ -1,0 +1,322 @@
+import streamlit as st
+import pandas as pd
+import joblib
+
+
+# ==========================================
+# PAGE CONFIGURATION
+# ==========================================
+
+st.set_page_config(
+    page_title="Traffic Congestion Predictor",
+    page_icon="🚦",
+    layout="wide"
+)
+
+
+# ==========================================
+# LOAD MODEL
+# ==========================================
+
+model = joblib.load(
+    "models/traffic_congestion_model.pkl"
+)
+
+
+# ==========================================
+# TITLE
+# ==========================================
+
+st.title("🚦 Traffic Congestion Predictor")
+
+st.markdown(
+    """
+    ### Predict traffic congestion using Machine Learning
+
+    Enter the current traffic conditions below and
+    the trained Random Forest model will predict
+    the congestion level.
+    """
+)
+
+st.divider()
+
+
+# ==========================================
+# SIDEBAR
+# ==========================================
+
+st.sidebar.header("⚙️ Traffic Settings")
+
+st.sidebar.info(
+    """
+    This application uses a Machine Learning model
+    trained on historical traffic data.
+    
+    **Model:** Random Forest
+    """
+)
+
+
+# ==========================================
+# INPUT SECTION
+# ==========================================
+
+st.header("🚗 Traffic Information")
+
+col1, col2, col3 = st.columns(3)
+
+
+with col1:
+
+    vehicle_count = st.number_input(
+        "🚗 Number of Vehicles",
+        min_value=0,
+        value=100,
+        step=1
+    )
+
+
+with col2:
+
+    vehicle_speed = st.number_input(
+        "🏎️ Average Vehicle Speed",
+        min_value=0.0,
+        value=40.0,
+        step=1.0
+    )
+
+
+with col3:
+
+    hour = st.slider(
+        "🕐 Hour of Day",
+        min_value=0,
+        max_value=23,
+        value=12
+    )
+
+
+col4, col5, col6 = st.columns(3)
+
+
+with col4:
+
+    day = st.slider(
+        "📅 Day of Month",
+        min_value=1,
+        max_value=31,
+        value=15
+    )
+
+
+with col5:
+
+    month = st.slider(
+        "📆 Month",
+        min_value=1,
+        max_value=12,
+        value=9
+    )
+
+
+with col6:
+
+    day_of_week = st.selectbox(
+        "📅 Day of Week",
+        options=[
+            0, 1, 2, 3, 4, 5, 6
+        ],
+        format_func=lambda x: [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+        ][x]
+    )
+
+
+st.divider()
+
+
+# ==========================================
+# ADDITIONAL CONDITIONS
+# ==========================================
+
+st.header("🌤️ Traffic Conditions")
+
+col7, col8 = st.columns(2)
+
+
+with col7:
+
+    weekend = st.checkbox(
+        "📅 Is it Weekend?"
+    )
+
+
+with col8:
+
+    peak_hour = st.checkbox(
+        "⏰ Is it Peak Hour?"
+    )
+
+
+st.divider()
+
+
+# ==========================================
+# TRAFFIC SUMMARY
+# ==========================================
+
+st.header("📊 Traffic Summary")
+
+summary1, summary2, summary3 = st.columns(3)
+
+
+with summary1:
+
+    st.metric(
+        "Vehicles",
+        vehicle_count
+    )
+
+
+with summary2:
+
+    st.metric(
+        "Average Speed",
+        f"{vehicle_speed} km/h"
+    )
+
+
+with summary3:
+
+    if peak_hour:
+        st.metric(
+            "Traffic Period",
+            "Peak Hour"
+        )
+    else:
+        st.metric(
+            "Traffic Period",
+            "Off-Peak"
+        )
+
+
+st.divider()
+
+
+# ==========================================
+# PREDICTION BUTTON
+# ==========================================
+
+st.header("🔮 Prediction")
+
+if st.button(
+    "🚦 Predict Traffic Congestion",
+    use_container_width=True
+):
+
+    # Create input DataFrame
+
+    input_data = pd.DataFrame({
+
+        "Vehicle_Count": [vehicle_count],
+
+        "Vehicle_Speed": [vehicle_speed],
+
+        "Hour": [hour],
+
+        "Day": [day],
+
+        "Month": [month],
+
+        "Day_of_Week": [day_of_week],
+
+        "Weekend": [weekend],
+
+        "Peak_Hour": [peak_hour]
+    })
+
+
+    # Make prediction
+
+    prediction = model.predict(
+        input_data
+    )
+
+
+    predicted_level = prediction[0]
+
+
+    # ======================================
+    # DISPLAY RESULT
+    # ======================================
+
+    st.subheader("🎯 Prediction Result")
+
+
+    st.success(
+        f"Predicted Congestion Level: **{predicted_level}**"
+    )
+
+
+    # ======================================
+    # DISPLAY INPUT DETAILS
+    # ======================================
+
+    st.subheader("📋 Prediction Details")
+
+    result_col1, result_col2 = st.columns(2)
+
+
+    with result_col1:
+
+        st.write(
+            f"**Number of Vehicles:** {vehicle_count}"
+        )
+
+        st.write(
+            f"**Average Speed:** {vehicle_speed} km/h"
+        )
+
+        st.write(
+            f"**Hour:** {hour}:00"
+        )
+
+
+    with result_col2:
+
+        st.write(
+            f"**Day:** {day}"
+        )
+
+        st.write(
+            f"**Month:** {month}"
+        )
+
+        st.write(
+            f"**Peak Hour:** {'Yes' if peak_hour else 'No'}"
+        )
+
+
+    st.info(
+        "The prediction is generated by the trained "
+        "Random Forest Machine Learning model."
+    )
+
+
+# ==========================================
+# FOOTER
+# ==========================================
+
+st.divider()
+
+st.caption(
+    "Traffic Congestion Predictor | "
+    "Machine Learning + Python + Streamlit"
+)
