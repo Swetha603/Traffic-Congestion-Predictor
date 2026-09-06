@@ -190,7 +190,3 @@ Traffic Congestion Prediction
 B.Tech CSE Data Science Student
 
 GitHub: [@Swetha603](https://github.com/Swetha603)
-
-P. Sai Swetha
-B.Tech CSE Data Science Student
-
